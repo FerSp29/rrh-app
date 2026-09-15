@@ -1,0 +1,56 @@
+@model RRH_APP.Models.Department
+@{
+    ViewData["Title"] = "Eliminar Departamento";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3 border-top border-danger border-4">
+            <div class="card-header bg-white py-3">
+                <h4 class="fw-bold mb-0 text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>¿Eliminar Departamento?</h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted">¿Estás seguro de que deseas eliminar este departamento? Esta acción no se puede deshacer.</p>
+
+                @if (Model.Employees.Any())
+                {
+                    <div class="alert alert-warning d-flex align-items-center mb-3">
+                        <i class="bi bi-exclamation-circle-fill fs-4 me-3 text-warning"></i>
+                        <div>
+                            <strong>Atención:</strong> Este departamento cuenta con <strong>@Model.Employees.Count empleado(s)</strong> vinculados. La base de datos tiene restricción referencial y rechazará el borrado si no reasignas primero los empleados.
+                        </div>
+                    </div>
+                }
+
+                <div class="bg-light p-3 rounded mb-4">
+                    <div class="row mb-2">
+                        <div class="col-4 fw-semibold text-muted">Código:</div>
+                        <div class="col-8 font-monospace fw-bold">@Model.Code</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 fw-semibold text-muted">Nombre:</div>
+                        <div class="col-8 fw-bold">@Model.Name</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 fw-semibold text-muted">Ubicación:</div>
+                        <div class="col-8">@(Model.Location ?? "N/A")</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 fw-semibold text-muted">Estado:</div>
+                        <div class="col-8">
+                            <span class="badge @(Model.IsActive ? "bg-success" : "bg-danger")">
+                                @(Model.IsActive ? "Activo" : "Inactivo")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post" class="d-flex justify-content-end gap-2">
+                    <input type="hidden" asp-for="Id" />
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash-fill me-1"></i> Confirmar Eliminación</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

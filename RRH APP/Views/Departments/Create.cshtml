@@ -1,0 +1,78 @@
+@model RRH_APP.Models.Department
+@{
+    ViewData["Title"] = "Nuevo Departamento";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white py-3">
+                <h4 class="fw-bold mb-0 text-dark"><i class="bi bi-folder-plus text-primary me-2"></i>Registrar Nuevo Departamento</h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label asp-for="Code" class="form-label fw-semibold">Código <span class="text-danger">*</span></label>
+                            <input asp-for="Code" class="form-control" placeholder="Ej. TI, FIN, RH" maxlength="10" required />
+                            <span asp-validation-for="Code" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label asp-for="Name" class="form-label fw-semibold">Nombre del Departamento <span class="text-danger">*</span></label>
+                            <input asp-for="Name" class="form-control" placeholder="Ej. Tecnología e Innovación" maxlength="60" required />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Description" class="form-label fw-semibold">Descripción</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Descripción de las funciones del área..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Location" class="form-label fw-semibold">Ubicación / Piso / Sede</label>
+                            <input asp-for="Location" class="form-control" placeholder="Ej. Piso 4 - Sede Principal" maxlength="80" />
+                            <span asp-validation-for="Location" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Budget" class="form-label fw-semibold">Presupuesto Asignado</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="Budget" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                            </div>
+                            <span asp-validation-for="Budget" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label fw-semibold">Teléfono</label>
+                            <input asp-for="Phone" class="form-control" placeholder="Ej. +57 300 1234567" maxlength="20" />
+                            <span asp-validation-for="Phone" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="form-label fw-semibold">Correo Electrónico</label>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="contacto@empresa.com" maxlength="120" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check form-switch mt-2">
+                                <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" id="switchIsActive" checked>
+                                <label class="form-check-label fw-semibold" for="switchIsActive">Departamento Activo</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle me-1"></i> Guardar Departamento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

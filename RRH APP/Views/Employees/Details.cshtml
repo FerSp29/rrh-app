@@ -1,0 +1,112 @@
+@model RRH_APP.Models.Employee
+@{
+    ViewData["Title"] = "Ficha del Empleado";
+}
+
+<div class="mb-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary mb-3">
+        <i class="bi bi-arrow-left"></i> Volver al listado
+    </a>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold mb-1">@Model.FirstName @Model.LastName</h2>
+            <span class="text-muted fs-5">@Model.Position</span> &bull;
+            <span class="badge @(Model.IsActive ? "bg-success" : "bg-danger")">
+                @(Model.IsActive ? "Activo" : "Inactivo")
+            </span>
+        </div>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                <i class="bi bi-pencil me-1"></i> Editar
+            </a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">
+                <i class="bi bi-trash me-1"></i> Eliminar
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-3 text-center p-4 bg-white">
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow" style="width: 80px; height: 80px; font-size: 1.8rem; font-weight: bold;">
+                @Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0, 1)
+            </div>
+            <h5 class="fw-bold mb-0">@Model.FirstName @Model.LastName</h5>
+            <p class="text-muted mb-2">@Model.Position</p>
+            <div>
+                <span class="badge bg-secondary font-monospace">Doc: @Model.Document</span>
+            </div>
+            <hr class="my-3">
+            <div class="text-start small">
+                <div class="mb-2"><i class="bi bi-envelope text-primary me-2"></i> @Model.Email</div>
+                <div class="mb-2"><i class="bi bi-telephone text-primary me-2"></i> @(Model.Phone ?? "Sin teléfono registrado")</div>
+                <div><i class="bi bi-calendar-check text-primary me-2"></i> Ingreso: @Model.HireDate.ToString("dd/MM/yyyy")</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-3 bg-white mb-4">
+            <div class="card-header bg-white fw-bold py-3">
+                <i class="bi bi-briefcase text-primary me-2"></i> Información Laboral y Contractual
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="text-muted small">Departamento Asignado</label>
+                        <div class="fw-bold fs-6">
+                            @if (Model.Department != null)
+                            {
+                                <a asp-controller="Departments" asp-action="Details" asp-route-id="@Model.DepartmentId" class="text-decoration-none">
+                                    <i class="bi bi-diagram-3 me-1"></i> @Model.Department.Name (@Model.Department.Code)
+                                </a>
+                            }
+                            else
+                            {
+                                <span>No asignado</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="text-muted small">Salario Asignado</label>
+                        <div class="fw-bold text-success fs-5 font-monospace">
+                            @Model.Salary.ToString("C2")
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="text-muted small">Fecha de Contratación</label>
+                        <div class="fw-semibold">
+                            @Model.HireDate.ToString("D")
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="text-muted small">Estado Laboral</label>
+                        <div>
+                            <span class="badge @(Model.IsActive ? "bg-success" : "bg-danger")">
+                                @(Model.IsActive ? "En servicio activo" : "Retirado / Inactivo")
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="text-muted small">Fecha de Registro en Sistema</label>
+                        <div class="text-muted">
+                            @Model.CreatedAt.ToString("g")
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="text-muted small">Última Actualización</label>
+                        <div class="text-muted">
+                            @(Model.UpdatedAt.HasValue ? Model.UpdatedAt.Value.ToString("g") : "Sin modificaciones")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
