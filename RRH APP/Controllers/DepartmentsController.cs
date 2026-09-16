@@ -1,3 +1,5 @@
+
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RRH_APP.Data;
@@ -17,9 +19,7 @@ public class DepartmentsController : Controller
     // GET: Departments
     public async Task<IActionResult> Index(string? search)
     {
-        var query = _context.Departments
-            .Include(d => d.Employees)
-            .AsQueryable();
+        var query = _context.Departments.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
         {
@@ -30,7 +30,11 @@ public class DepartmentsController : Controller
         }
 
         ViewBag.Search = search;
-        var departments = await query.OrderBy(d => d.Name).ToListAsync();
+        var departments = await query
+            .Include(d => d.Employees)
+            .OrderBy(d => d.Name)
+            .ToListAsync();
+
         return View(departments);
     }
 
